@@ -21,29 +21,26 @@ use Illuminate\Support\facades\Input;
 
 
 
-//START 
+
 Route::get('currency', 'HomeController@ajaxRequest');
 
 Route::POST('currency', 'HomeController@calculateCurrency');
-//END
+
+Route::get('/', function() {
+return view('welcome');
+});
 
 
 
 
 
 
-
-
-
-
+/*
 
 
 Route::get('/project', 'ExchangerateController@index');
 
 
-Route::get('/', function() {
-return view('welcome');
-});
 
 
 Route::get('/todos', 'TodosController@index');
@@ -61,7 +58,7 @@ Route::post('todos/{todo}/update-todos', 'TodosController@update');
 Route::get('todos/{todo}/delete', 'TodosController@destroy');
 
 Route::get('/new', 'ArrayController@index');
-
+*/
 
 /*Route::get('/new', function() {
 

@@ -12,20 +12,6 @@
         <h6>{{$description}}</h6>
 <h6>Visit <a href="http://www.floatrates.com/daily/gbp.xml" target="_blank">FloatRate</a>.</h6>
 
-<!-- VALIDATION START-->
-@if($errors->any())
-
-<div class="alert alert-danger">
-  <ul class="list-group">
-    @foreach($errors->all() as $error)
-      <li class="list-group-item">
-        {{$error}}
-      </li>
-      @endforeach
-    </ul>
-  </div>
-@endif
-<!--VALIDATION END-->
 
 <form>
 <!--Currency From Input box-->
