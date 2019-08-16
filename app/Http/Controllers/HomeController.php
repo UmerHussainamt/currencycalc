@@ -34,14 +34,6 @@ class HomeController extends Controller
         $amount = $request->input('amount');
 
 
-        /*$this->validate(request(), [
-            'currencyfrom' => 'required',
-            'currencyto' => 'required',
-            'amount' => 'required' 
-        ]);*/
-
-
-
         $dataSource = $this->getCurrencyData();
         
         $currencyList = array_column($dataSource, 'targetCurrency');
@@ -56,9 +48,12 @@ class HomeController extends Controller
     */
 
             $pounds = $currencyFromItem->inverseRate * $amount; 
-            $return = $pounds * $currencyToItem->exchangeRate;
+            $returnedConversion = $pounds * $currencyToItem->exchangeRate;
 
-            $return = $amount. ' ' . $from. ' is equal to ' .$return. ' ' .$to;
+
+$roundedConversion = round($returnedConversion, 2);
+
+            $return = $amount. ' ' . $from. ' = ' .$roundedConversion. ' ' .$to;
         
 
 
