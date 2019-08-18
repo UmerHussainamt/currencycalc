@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
+
   
 class HomeController extends Controller
 
@@ -27,7 +29,17 @@ class HomeController extends Controller
     */
     public function calculateCurrency(Request $request){
 
-    
+
+//validation
+$this->validate($request, [
+    'amount' => 'required|regex:/^\d+(\.\d{1,2})?$/|min:2|',
+    'currencyfrom' => 'required',
+    'currencyto' => 'required'
+]);
+
+
+
+
 
         $from = $request->input('currencyfrom');
         $to = $request->input('currencyto');
@@ -51,7 +63,7 @@ class HomeController extends Controller
             $returnedConversion = $pounds * $currencyToItem->exchangeRate;
 
 
-$roundedConversion = round($returnedConversion, 2);
+            $roundedConversion = round($returnedConversion, 2);
 
             $return = $amount. ' ' . $from. ' = ' .$roundedConversion. ' ' .$to;
         
@@ -106,22 +118,5 @@ $roundedConversion = round($returnedConversion, 2);
     }
 
    
-
-    /**
-
-     * Create a new controller instance.
-
-     *
-
-     * @return void
-
-     */
-
-   /* public function ajaxRequestPost(Request $request)
-    {
-        $input = $request->all();
-        //calculation to take place here to get the result
-        return response()->json(['success'=>'Got Simple Ajax Request.']);
-    }*/
 
 }

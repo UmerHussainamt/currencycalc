@@ -4,9 +4,7 @@
 
 
 
-
     <div class="container">
-
 
 
         <h4>Currency exchange calculator</h4>
@@ -16,6 +14,7 @@
 
 
 <form>
+
 
   <div class="form-row">
 <!--Currency From Input box-->
@@ -42,9 +41,12 @@
 
 
   <div class="col-md-4 mb-3">
-      <label><strong>Amount</strong></label>
-        <input type="text" name="amount" class="form-control" required="">
+      <label for="amount"><strong>Amount</strong></label>
+        <input type="text" name="amount" id="amount" class="form-control" required="">
+
+          <small class="text-danger" style="display:none; text-align:center;" id="nonsuccessMsg"></small>
   </div>
+ 
 
    </div>
 
@@ -53,9 +55,13 @@
                   
             </div>
 
- <!-- <h2 id="result" /> -->
-
+ 
         </form>
+
+
+ <div class="alert alert-success" style="display:none; text-align:center;" id="successMsg">
+            <strong>Conversion Successful!</strong>
+  </div>
 
 
   <div class="row justify-content-center">
@@ -63,20 +69,11 @@
       <div class="card card-default">
         <div class="card-header">
          <strong> Result </strong>
-
-
-          <div class="alert alert-success" style="display:none; text-align:center;" id="successMsg">
-            <strong>Conversion Successful!</strong>
-          </div>
-
-
+         
         </div>
         <div class="card-body">
           <ul class="list-group">
-              
                <h4 style="text-align:center;" id="result"></h4>
-              
-          
           </ul>
 
 
@@ -117,29 +114,42 @@
         }
         currencyto = currencyto[0];
         var amount = $("input[name=amount]").val();
-        if(!amount){
-          alert('Enter an amount!');
-        }
-
+        
+       
 
    
         $.ajax({
 
            type:'POST',
-
            url:'/currency',
-
            data:{currencyfrom:currencyfrom, currencyto:currencyto, amount:amount},
 
            success:function(data){
-document.getElementById("successMsg").style.display="block";
+            document.getElementById("successMsg").style.display="block";
 
-            //alert('Submission successful!');
-              $('#result').html(data)
+            //The Result
+              $('#result').html(data); 
+
+
+              /*Error Messages concerning amount value */
+            var errorMessage = $('#nonsuccessMsg');
+            errorMessage.html(jsonValue.errors.amount[0]).css('display', 'none');
 
            },
            error:function(xhr){
-            alert(JSON.stringify(xhr.responseJSON.errors));
+            document.getElementById("successMsg").style.display="none";
+            
+//alert(JSON.stringify(xhr.responseJSON.errors));
+
+            /*Error messages concerning amount */
+            var errorMessage = $('#nonsuccessMsg');
+            
+            jsonValue = jQuery.parseJSON( xhr.responseText );
+          
+            errorMessage.html(jsonValue.errors.amount[0]).css('display', 'block');
+
+         
+
            }
 
         });
